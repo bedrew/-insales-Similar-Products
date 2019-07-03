@@ -1,7 +1,4 @@
-  <style>
-    .js-similar-products{display: none;}
-  </style>
-  <div class="js-similar-products primary-inner">
+<div class="js-similar-products primary-inner">
     <div class="similar-products-inner container">
       <div class="block-header is-small">
         <div class="view_more">Смотрите еще</div>
@@ -9,7 +6,7 @@
       <div class="row js-product-inset">
       </div>
     </div>
-  </div><!-- /.similar-products -->
+</div>
 
 
 
@@ -19,12 +16,12 @@
      var SimilarProducts = function(config) {
 
       this.el = {
-        container: jQuery('.js-similar-products'),
-        products:  jQuery('.js-product-inset'),
+        container: $('.js-similar-products'),
+        products:  $('.js-product-inset'),
         property:  'data-property-handle',
         char:      'data-char-id',
-        price:      jQuery('[data-product-price]'),
-        collection :jQuery('.breadcrumb-item:last').prev()
+        price:      $('[data-product-price]'),
+        collection :$('.breadcrumb-item:last').prev()
       }  
       
       this.config = config
@@ -44,7 +41,7 @@
         return '<div class="product-card similar-product cell-xl-3 cell-lg-4 cell-sm-6 cell-xs-12">' + product + '</div>'
       }
 
-      jQuery.get(link)
+      $.get(link)
       .done(function(e){
         $('.products-list .product-card', $.parseHTML(e))
         .each(function(){
@@ -62,10 +59,10 @@
 
        self.el.products.find('.product-card').each(function(){
 
-        var product_id = jQuery(this).find('[data-product-id]').data('product-id')
+        var product_id = $(this).find('[data-product-id]').data('product-id')
 
         if ( product_id == $('[data-main-id]').data('main-id') ) {
-         jQuery(this).remove()
+         $(this).remove()
        }
      })
 
@@ -90,13 +87,11 @@
 
      var margin = parseInt(self.config['Цена'])
 
-      // var collection = self.el.collection.find('a').attr('href')
-
-      var collection = '/collection/all'
+      var collection = self.el.collection.find('a').attr('href')
 
       var link = function(margin){
        if ( margin ) {
-         return collection + "?page_size=99&price_min=" + ( Math.round(price - margin) ) + "&price_max=" + (Math.round(price + margin))  + "&" + chars.join('&')
+         return collection + "?page_size=" + self.config['Колличество'] + "&price_min=" + ( Math.round(price - margin) ) + "&price_max=" + (Math.round(price + margin))  + "&" + chars.join('&')
        } else {
          return collection + "?page_size=99&" + chars.join('&')
        }
@@ -144,7 +139,7 @@ return SimilarProducts
 
 })()
 
-jQuery(function(){
+$(function(){
 
   new SimilarProducts({
     'Параметры' : [
@@ -152,7 +147,7 @@ jQuery(function(){
     'seriya',
     'dekor'
     ],
-      //'Цена' : 15000,
+      'Цена' : 15000,
       'Колличество' : 100
     }) 
 
